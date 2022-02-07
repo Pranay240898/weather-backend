@@ -22,7 +22,7 @@ function get_greet(request, response) {
 }
 function post_token(request, response) {
     response.json({
-   
+        "token": "abc123"
     })
 }
 
