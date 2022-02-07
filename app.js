@@ -22,7 +22,8 @@ function get_greet(request, response) {
 }
 function post_token(request, response) {
     response.json({
-        "token": "abc123"
+        "access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByYW5heSIsInBhc3N3b3JkIjoicHJhbmF5In0.dJxsvjugigBiqncrKsn6WqR_TJ9pZP9bTtIUBsFksB8",
+        "expires": new Date()
     })
 }
 
