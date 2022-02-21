@@ -1,35 +1,141 @@
-"use strict"
+// "use strict"
 
-var express=require('express')
-var app = express()
-var bodyparser = require('body-parser')
-app.use(bodyparser())
+// Requiring express in our server
+const express = require('express');
+const app = express();
+//create a token from jwt.io
+const key = "jwt token"
 
-app.listen(5000)
-console.log('Node.js Express server is running on port 5000...')
+var bodyParser = require('body-parser');
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(bodyParser.json());
 
-app.get('/v1/weather', get_weather)
-app.get('/v1/hello', get_greet)
-app.post('/v1/auth',post_token)
+app.post('/v1/auth', (req,res)=>{
+
+  console.log("/v1/auth request recieved")
+
+  username = req.body.username
+  password = req.body.password
+  if (username == "mokh" && password == "qwerty"){
+    token = {
+      "jwt" : key,
+      //"expires": expiry 
+   }
+   res.json(token)
+
+  }
+})
 
 
-function get_weather(request, response) {
-    if (request.headers.authorization == "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByYW5heSIsInBhc3N3b3JkIjoicHJhbmF5In0.dJxsvjugigBiqncrKsn6WqR_TJ9pZP9bTtIUBsFksB8") {
-        response.json({ "coord": { "lon": -123.262, "lat": 44.5646 }, "weather": [{ "id": 701, "main": "Mist", "description": "mist", "icon": "50n" }], "base": "stations", "main": { "temp": 276.58, "feels_like": 276.58, "temp_min": 275.25, "temp_max": 279.92, "pressure": 1019, "humidity": 80 }, "visibility": 6437, "wind": { "speed": 0.45, "deg": 203, "gust": 0.45 }, "clouds": { "all": 100 }, "dt": 1642392954, "sys": { "type": 2, "id": 2040223, "country": "US", "sunrise": 1642347934, "sunset": 1642381185 }, "timezone": -28800, "id": 5720727, "name": "Corvallis", "cod": 200 })
-    }
-}
-function get_greet(request, response) {
-    if (request.headers.authorization == "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByYW5heSIsInBhc3N3b3JkIjoicHJhbmF5In0.dJxsvjugigBiqncrKsn6WqR_TJ9pZP9bTtIUBsFksB8") {
-        response.json({
-            "greet": "Hi friends!"
-        })
-    }
-}
-function post_token(request, response) {
-    response.json({
-        "access-token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InByYW5heSIsInBhc3N3b3JkIjoicHJhbmF5In0.dJxsvjugigBiqncrKsn6WqR_TJ9pZP9bTtIUBsFksB8",
-        "expires": new Date()
-    })
-}
+app.get('/v1/weather', function(req, res) {
+  console.log("/data/2.5/weather request recieved")
+  res.json({
+    "coord": {
+      "lon": -123.262,
+      "lat": 44.5646
+    },
+    "weather": [
+      {
+        "id": 802,
+        "main": "Clouds",
+        "description": "scattered clouds",
+        "icon": "03d"
+      }
+    ],
+    "base": "stations",
+    "main": {
+      "temp": 300.04,
+      "feels_like": 280.04,
+      "temp_min": 278.79,
+      "temp_max": 284.95,
+      "pressure": 1020,
+      "humidity": 81,
+      "sea_level": 1020,
+      "grnd_level": 1011
+    },
+    "visibility": 10000,
+    "wind": {
+      "speed": 1.28,
+      "deg": 17,
+      "gust": 1.3
+    },
+    "clouds": {
+      "all": 50
+    },
+    "dt": 1642376495,
+    "sys": {
+      "type": 2,
+      "id": 2006021,
+      "country": "US",
+      "sunrise": 1642347934,
+      "sunset": 1642381185
+    },
+    "timezone": -28800,
+    "id": 5720727,
+    "name": "Corvallis",
+    "cod": 200
+  });
+});
 
+// Defining get request at '/GET/data' route
+app.get('/data/2.5/weather', function(req, res) {
+  console.log("/data/2.5/weather request recieved")
+  res.json({
+    "coord": {
+      "lon": -123.262,
+      "lat": 44.5646
+    },
+    "weather": [
+      {
+        "id": 802,
+        "main": "Clouds",
+        "description": "scattered clouds",
+        "icon": "03d"
+      }
+    ],
+    "base": "stations",
+    "main": {
+      "temp": 300.04,
+      "feels_like": 280.04,
+      "temp_min": 278.79,
+      "temp_max": 284.95,
+      "pressure": 1020,
+      "humidity": 81,
+      "sea_level": 1020,
+      "grnd_level": 1011
+    },
+    "visibility": 10000,
+    "wind": {
+      "speed": 1.28,
+      "deg": 17,
+      "gust": 1.3
+    },
+    "clouds": {
+      "all": 50
+    },
+    "dt": 1642376495,
+    "sys": {
+      "type": 2,
+      "id": 2006021,
+      "country": "US",
+      "sunrise": 1642347934,
+      "sunset": 1642381185
+    },
+    "timezone": -28800,
+    "id": 5720727,
+    "name": "Corvallis",
+    "cod": 200
+  });
+});
+  
+app.get('/v1/hello', function(req, res) {
+  console.log("/v1/hello request recieved")
+
+  res.send('hello');
+});
+  
+// Setting the server to listen at port 3000
+app.listen(3000, function(req, res) {
+  console.log("Server is running at port 3000");
+});
 
