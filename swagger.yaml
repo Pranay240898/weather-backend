@@ -133,7 +133,7 @@ paths:
                   value:
                     message: Hi! Friends!!
 servers:
-  - url: http://http://3.86.102.99:5000/v1
+  - url: http://http://3.86.102.99:3000/v1
 components:
   securitySchemes:
     bearerAuth:            # arbitrary name for the security scheme
